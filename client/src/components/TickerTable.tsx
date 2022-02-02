@@ -39,13 +39,10 @@ const TickerTable: React.FC = () => {
   useEffect( () => {
     dispatch(actionTickers());
   }, []);
-  
+
   const {loading, error, tickers} = useTypedSelector(state => state.ticker);
-
   const dispatch = useDispatch();
-
   const [checkedList, setCheckedList] = useState((new Map()));
-
   const disabledtickers = useRef<number[]>([]);
 
   const rows = tickers.map( (ticker) => createData(ticker.ticker, ticker.exchange, ticker.price, ticker.change, ticker.change_percent, ticker.dividend, ticker.yield, ticker.last_trade_time) );
@@ -59,12 +56,14 @@ const TickerTable: React.FC = () => {
 
     if (checked) disabledtickers.current.push(index);
     else disabledtickers.current.splice(disabledtickers.current.indexOf(index), 1);
+
     socket.emit('disabled', disabledtickers.current);
 
     setCheckedList(list);
   }
 
   if (loading) return <LinearProgress  />
+  
   if (error) return (
   <Alert severity="error">
     <AlertTitle>Error</AlertTitle>
@@ -98,7 +97,7 @@ const TickerTable: React.FC = () => {
               </TableCell>
               <TableCell align="center">{row.exchange}</TableCell>
               <TableCell align="center">
-                <Indicator currentValue = {row.price} />
+                <Indicator propValue = {row.price} />
               </TableCell>
               <TableCell align="center">{row.change}$</TableCell>
               <TableCell align="center">{row.change_percent}%</TableCell>

@@ -1,4 +1,4 @@
-import { TickerAction, tickerGetterState, TickerActionTypes, TickerState } from "../../types/Ticker";
+import { TickerAction, tickerGetterState, TickerActionTypes } from "../../types/Ticker";
 
 
 const initialState:tickerGetterState = {
